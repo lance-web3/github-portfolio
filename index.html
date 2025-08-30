@@ -38,25 +38,127 @@
             overflow-x: hidden;
         }
 
-        /* Subtle animated background */
-        .bg-grid {
+        /* Enhanced animated background */
+        .bg-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120%;
+            height: 120%;
             opacity: 0.03;
             background-image: 
                 linear-gradient(rgba(54, 108, 229, 0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(54, 108, 229, 0.1) 1px, transparent 1px);
             background-size: 50px 50px;
-            z-index: -1;
             animation: gridMove 20s linear infinite;
         }
 
         @keyframes gridMove {
             0% { transform: translate(0, 0); }
             100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float linear infinite;
+        }
+
+        .particle:nth-child(2) { background: var(--docker-blue); }
+        .particle:nth-child(3) { background: var(--k8s-blue); }
+        .particle:nth-child(4) { background: var(--success-green); }
+        .particle:nth-child(5) { background: var(--warning-orange); }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Geometric shapes floating */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.05;
+            animation: drift linear infinite;
+        }
+
+        .shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid var(--accent-blue);
+        }
+
+        .shape.square {
+            width: 20px;
+            height: 20px;
+            background: var(--docker-blue);
+            transform: rotate(45deg);
+        }
+
+        .shape.hexagon {
+            width: 20px;
+            height: 11px;
+            background: var(--k8s-blue);
+            position: relative;
+        }
+
+        .shape.hexagon::before,
+        .shape.hexagon::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+
+        .shape.hexagon::before {
+            bottom: 100%;
+            border-bottom: 6px solid var(--k8s-blue);
+        }
+
+        .shape.hexagon::after {
+            top: 100%;
+            border-top: 6px solid var(--k8s-blue);
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translateX(-100px) translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(360deg);
+            }
         }
 
         /* Navigation */
@@ -207,6 +309,73 @@
             51%, 100% { opacity: 0; }
         }
 
+        /* Typewriter Effect */
+        .command-wrapper {
+            display: inline-block;
+            vertical-align: top;
+        }
+        
+        .typewriter-command {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: typewriter 1.5s steps(50) 0.2s forwards;
+        }
+
+        @keyframes typewriter {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 520px;
+            }
+        }
+
+        /* Animated Terminal Output */
+        .terminal-output {
+            opacity: 0;
+            animation: terminalOutput 0.5s ease-in-out 1.8s forwards;
+        }
+
+        .terminal-data {
+            opacity: 0;
+            animation: terminalData 0.5s ease-in-out 2.5s forwards;
+        }
+
+        @keyframes terminalOutput {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes terminalData {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hide cursor after typing is complete */
+        .typing-cursor.hide-cursor {
+            animation: hideCursor 0.1s ease-in-out 1.7s forwards;
+        }
+
+        @keyframes hideCursor {
+            to {
+                opacity: 0;
+            }
+        }
+
         /* Tech Stack Grid */
         .tech-grid {
             display: grid;
@@ -327,6 +496,125 @@
             background: var(--hover-bg);
         }
 
+        /* Education & Experience Section */
+        .subsection-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 3rem 0 2rem 0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .subsection-title i {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+        }
+
+        .education-section, .experience-section {
+            margin-bottom: 3rem;
+        }
+
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .timeline-date {
+            min-width: 180px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            background: var(--tertiary-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-align: center;
+            height: fit-content;
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-institution {
+            font-size: 1rem;
+            color: var(--docker-blue);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-location {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-location::before {
+            content: '📍';
+            font-size: 0.8rem;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-top: 0.8rem;
+        }
+
+        .timeline-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.8rem;
+            background: var(--tertiary-bg);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .status-current {
+            background: var(--success-green) !important;
+            color: white !important;
+            border-color: var(--success-green) !important;
+        }
+
+        .status-completed {
+            background: var(--k8s-blue) !important;
+            color: white !important;
+            border-color: var(--k8s-blue) !important;
+        }
+
+        .status-foundation {
+            background: var(--warning-orange) !important;
+            color: white !important;
+            border-color: var(--warning-orange) !important;
+        }
+
         /* Projects Section */
         .project-grid {
             display: grid;
@@ -435,78 +723,89 @@
             font-weight: 600;
         }
 
-        /* Pipeline Section */
-        .pipeline-container {
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 3rem;
-            margin: 3rem 0;
-        }
-
-        .pipeline-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 3rem;
-            color: var(--text-primary);
-        }
-
-        .pipeline {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-
-        .pipeline-step {
+        /* Improved Project Gallery Styling */
+        .project-gallery {
+            margin: 2.5rem 0;
             background: var(--tertiary-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-            min-width: 140px;
-            transition: all 0.3s ease;
-            position: relative;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .pipeline-step.active {
-            border-color: var(--success-green);
-            background: rgba(40, 167, 69, 0.1);
-        }
-
-        .pipeline-step i {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .pipeline-step.active i {
-            color: var(--success-green);
-        }
-
-        .pipeline-step h4 {
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+        .gallery-header {
+            font-size: 1.2rem;
             font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .pipeline-step p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
         }
 
-        .pipeline-arrow {
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            animation: pulse 2s infinite;
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            background: var(--secondary-bg);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+        .gallery-item:hover {
+            border-color: var(--accent-blue);
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(54, 108, 229, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Links Section Styling */
+        .links-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         /* Certifications */
@@ -619,13 +918,27 @@
         @media (max-width: 768px) {
             .hero-title { font-size: 2.5rem; }
             .section-title { font-size: 2rem; }
-            .pipeline { flex-direction: column; }
-            .pipeline-arrow { transform: rotate(90deg); }
             nav ul { flex-wrap: wrap; gap: 1rem; }
             .nav-container { flex-direction: column; gap: 1rem; }
             .project-header { flex-direction: column; text-align: center; }
             .project-icon { margin-top: 0; }
             .project-links { justify-content: center; }
+            .links-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            
+            /* Mobile timeline adjustments */
+            .timeline-item { 
+                flex-direction: column; 
+                gap: 1rem; 
+            }
+            .timeline-date { 
+                min-width: auto; 
+                width: fit-content; 
+                align-self: flex-start; 
+            }
+            .subsection-title { 
+                font-size: 1.5rem; 
+            }
         }
 
         /* Loading animations */
@@ -685,10 +998,42 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-blue);
         }
+
+        /* Contact card links styling */
+        .contact-card a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        .contact-card a:hover {
+            color: inherit;
+        }
+        
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
+    <div class="bg-container">
+        <div class="bg-grid"></div>
+        
+        <!-- Floating particles -->
+        <div class="particle" style="left: 10%; animation-duration: 15s; animation-delay: 0s; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 20%; animation-duration: 20s; animation-delay: 2s; width: 6px; height: 6px;"></div>
+        <div class="particle" style="left: 30%; animation-duration: 18s; animation-delay: 1s; width: 3px; height: 3px;"></div>
+        <div class="particle" style="left: 50%; animation-duration: 22s; animation-delay: 3s; width: 5px; height: 5px;"></div>
+        <div class="particle" style="left: 70%; animation-duration: 16s; animation-delay: 1.5s; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 80%; animation-duration: 19s; animation-delay: 0.5s; width: 7px; height: 7px;"></div>
+        <div class="particle" style="left: 90%; animation-duration: 17s; animation-delay: 2.5s; width: 3px; height: 3px;"></div>
+
+        <!-- Floating geometric shapes -->
+        <div class="floating-shapes">
+            <div class="shape triangle" style="left: 15%; animation-duration: 25s; animation-delay: 1s;"></div>
+            <div class="shape square" style="left: 35%; animation-duration: 30s; animation-delay: 3s;"></div>
+            <div class="shape hexagon" style="left: 55%; animation-duration: 28s; animation-delay: 0s;"></div>
+            <div class="shape triangle" style="left: 75%; animation-duration: 26s; animation-delay: 2s;"></div>
+            <div class="shape square" style="left: 85%; animation-duration: 32s; animation-delay: 4s;"></div>
+        </div>
+    </div>
 
     <nav>
         <div class="nav-container">
@@ -696,8 +1041,8 @@
             <ul>
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#pipeline" class="nav-link">Pipeline</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </div>
@@ -719,15 +1064,17 @@
                 
                 <div class="terminal-line">
                     <span class="prompt">saoud@cloud:</span>
-                    <span class="command">kubectl get engineer --selector=expertise=mlops,devops</span>
-                    <span class="typing-cursor">|</span>
+                    <span class="command-wrapper">
+                        <span class="command typewriter-command">kubectl get engineer --selector=expertise=mlops,devops</span>
+                    </span>
+                    <span class="typing-cursor hide-cursor">|</span>
                 </div>
                 
-                <div class="terminal-line" style="margin-top: 0.5rem;">
+                <div class="terminal-line terminal-output" style="margin-top: 0.5rem;">
                     <span style="color: var(--success-green);">NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READY&nbsp;&nbsp;&nbsp;STATUS&nbsp;&nbsp;&nbsp;&nbsp;CERTIFICATIONS</span>
                 </div>
                 
-                <div class="terminal-line" style="margin-top: 0.5rem;">
+                <div class="terminal-line terminal-data" style="margin-top: 0.5rem;">
                     <span style="color: var(--text-secondary);">saoud-yahya&nbsp;&nbsp;&nbsp;1/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running&nbsp;&nbsp;&nbsp;KCNA,LFS250</span>
                 </div>
 
@@ -761,6 +1108,27 @@
                         <i class="fas fa-brain"></i>
                         <h4>MLOps</h4>
                         <p>ML Production</p>
+                    </div>
+                </div>
+
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>KCNA Certified</h4>
+                        <p>Kubernetes and Cloud Native Associate</p>
+                        <small>Cloud Native Computing Foundation</small>
+                    </div>
+                    <div class="cert-card">
+                        <i class="fab fa-linux"></i>
+                        <h4>LFS250 Certified</h4>
+                        <p>Kubernetes and Cloud Native Essentials</p>
+                        <small>The Linux Foundation</small>
+                    </div>
+                    <div class="cert-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Master's in AI</h4>
+                        <p>Artificial Intelligence (In Progress)</p>
+                        <small>Faculté des Sciences Semlalia, Marrakech</small>
                     </div>
                 </div>
             </div>
@@ -851,6 +1219,77 @@
         </div>
     </section>
 
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Education & Experience</h2>
+            
+            <div class="education-section">
+                <h3 class="subsection-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    Education
+                </h3>
+                
+                <div class="timeline-container">
+                    <div class="timeline-item devops-card">
+                        <div class="timeline-date">Oct 2024 - Oct 2026</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Master's Degree, Artificial Intelligence</h4>
+                            <p class="timeline-institution">Faculté des Sciences Semlalia, Marrakech</p>
+                            <div class="timeline-status status-current">Currently Pursuing</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item devops-card">
+                        <div class="timeline-date">Oct 2023 - Jun 2024</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Bachelor's Degree, Computer Science</h4>
+                            <p class="timeline-institution">École Supérieure de Technologie de Safi</p>
+                            <div class="timeline-status status-completed">Completed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item devops-card">
+                        <div class="timeline-date">2021 - 2023</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Technology Studies</h4>
+                            <p class="timeline-institution">École Supérieure de Technologie de Safi</p>
+                            <div class="timeline-status status-foundation">Foundation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="experience-section">
+                <h3 class="subsection-title">
+                    <i class="fas fa-briefcase"></i>
+                    Professional Experience
+                </h3>
+                
+                <div class="timeline-container">
+                    <div class="timeline-item devops-card">
+                        <div class="timeline-date">May 2024 - Jun 2024</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">DevOps Developer Intern</h4>
+                            <p class="timeline-institution">Country Technologie</p>
+                            <p class="timeline-location">Casablanca, Casablanca-Settat, Morocco</p>
+                            <div class="timeline-description">2-month internship focusing on DevOps practices and cloud infrastructure</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item devops-card">
+                        <div class="timeline-date">Apr 2023 - May 2023</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Software Developer Intern</h4>
+                            <p class="timeline-institution">2M TV</p>
+                            <p class="timeline-location">Casablanca-Settat, Morocco • On-site</p>
+                            <div class="timeline-description">2-month internship in software development and media technology</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
@@ -914,9 +1353,94 @@
                             AWS Integration
                         </a>
                     </div>
+                    <div class="links-header">💻 Source Code Repositories</div>
+                    <div class="links-grid">
+                        <!-- Core Platform -->
+                        <a href="https://github.com/ZakariaRek/Ecommerce-App" class="project-link">
+                            <i class="fas fa-server"></i>
+                            Core Platform - 8 Microservices
+                        </a>
+                        
+                        <!-- Frontend Applications -->
+                        <a href="https://github.com/Saoudyahya/Ecommerce-front-office" class="project-link">
+                            <i class="fab fa-react"></i>
+                            Customer Frontend - Next.js 15
+                        </a>
+                        
+                        <a href="https://github.com/ZakariaRek/Ecommerce_Back_office" class="project-link">
+                            <i class="fas fa-user-cog"></i>
+                            Admin Dashboard - React
+                        </a>
+
+                        <!-- Infrastructure & Deployment -->
+                        <a href="https://github.com/ZakariaRek/Ecommerce-App-Helm-Charts" class="project-link">
+                            <i class="fas fa-dharmachakra"></i>
+                            Helm Charts - 6 Production Charts
+                        </a>
+                        
+                        <a href="https://github.com/Saoudyahya/Ecommerce-App-Terraform-config" class="project-link">
+                            <i class="fas fa-layer-group"></i>
+                            Infrastructure - Terraform AWS
+                        </a>
+                        
+                        <a href="https://github.com/ZakariaRek/gitops-repo_ArgoCD" class="project-link">
+                            <i class="fas fa-sync"></i>
+                            GitOps - ArgoCD Deployments
+                        </a>
+                        
+                        <a href="https://github.com/Saoudyahya/Ecommerce-App-Config-serveur-repo" class="project-link">
+                            <i class="fas fa-cog"></i>
+                            Configuration Management
+                        </a>
+                    </div>
                 </div>
 
                 <div class="devops-card project-card" style="--index: 1">
+                    <div class="project-header">
+                        <i class="fas fa-dharmachakra project-icon"></i>
+                        <div>
+                            <h3 class="project-title">Kubernetes-Based Machine Learning Platform</h3>
+                            <p class="project-subtitle">Scalable ML Workflows on Kubernetes</p>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Developed a comprehensive Kubernetes project with three Flask applications: LSTM for fake news detection, an ML pipeline for S&P 500 prediction, and GPT-2 for text generation. Deployed and managed using kubectl with comprehensive monitoring through Prometheus and Grafana for real-time insights into scalable and reliable ML workflows.
+                    </p>
+                    <div class="achievement-banner" style="margin: 1.5rem 0; background: linear-gradient(135deg, var(--k8s-blue), var(--success-green));">
+                        🤖 ML Pipeline: LSTM + S&P 500 + GPT-2 • Prometheus monitoring • Kubernetes orchestration
+                    </div>
+                    <div class="project-tech">
+                        <div class="skill-tags">
+                            <span class="skill-tag">Kubernetes</span>
+                            <span class="skill-tag">Flask</span>
+                            <span class="skill-tag">LSTM</span>
+                            <span class="skill-tag">GPT-2</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Prometheus</span>
+                            <span class="skill-tag">Grafana</span>
+                            <span class="skill-tag">kubectl</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">MLOps</span>
+                        </div>
+                    </div>
+                    <ul class="project-features">
+                        <li>Three specialized Flask applications: fake news detection, S&P 500 prediction, text generation</li>
+                        <li>LSTM neural networks for sequential data processing and prediction tasks</li>
+                        <li>GPT-2 integration for advanced natural language generation capabilities</li>
+                        <li>Kubernetes deployment with kubectl for container orchestration and scaling</li>
+                        <li>Real-time monitoring and metrics collection using Prometheus and Grafana</li>
+                        <li>Scalable ML workflows with automatic resource management and fault tolerance</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/Saoudyahya/Kubernetes-Based-Machine-Learning-Project" class="project-link">
+                            <i class="fab fa-github"></i>
+                            View Project
+                        </a>
+                    </div>
+                </div>
+
+                <div class="devops-card project-card" style="--index: 2">
                     <div class="project-header">
                         <i class="fas fa-dna project-icon"></i>
                         <div>
@@ -952,14 +1476,18 @@
                         <li>Overcame traditional NER limitations and computational expense of standard transformers</li>
                     </ul>
                     <div class="project-links">
-                        <a href="https://github.com/Saoudyahya/BioDataExtract" class="project-link">
+                        <a href="./assets/papers/Self_Supervised_Entity_Relationship_Learning_from_PDF_Documents (2).pdf" class="project-link">
+                            <i class="fas fa-file-pdf"></i>
+                            Research Paper
+                        </a>
+                        <a href="https://github.com/Saoudyahya/Self-Supervised-Entity-Relationship-Learning-with-Strict-Filtering-Contrastive-Learning" class="project-link">
                             <i class="fab fa-github"></i>
                             Research Code
                         </a>
                     </div>
                 </div>
 
-                <div class="devops-card project-card" style="--index: 2">
+                <div class="devops-card project-card" style="--index: 3">
                     <div class="project-header">
                         <i class="fas fa-brain project-icon"></i>
                         <div>
@@ -995,18 +1523,18 @@
                         <li>Created practical guidelines for architecture selection in resource-constrained environments</li>
                     </ul>
                     <div class="project-links">
-                        <a href="#" class="project-link">
+                        <a href="./assets/papers/Scaling_Laws__Sparse_Activation__and_Mechanistic_Interpretability_in_Transformer_Architectures__A_Comprehensive_Comparative_Study.pdf" class="project-link">
                             <i class="fas fa-file-pdf"></i>
                             Research Paper
                         </a>
-                        <a href="#" class="project-link">
+                        <a href="https://github.com/Saoudyahya/Scaling-Laws-Model-Architectures" class="project-link">
                             <i class="fab fa-github"></i>
                             Open Source Code
                         </a>
                     </div>
                 </div>
 
-                <div class="devops-card project-card" style="--index: 3">
+                <div class="devops-card project-card" style="--index: 4">
                     <div class="project-header">
                         <i class="fas fa-eye project-icon"></i>
                         <div>
@@ -1035,6 +1563,24 @@
                         <li>Hardware-software integration with mobile companion app</li>
                         <li>Containerized deployment for scalability and maintainability</li>
                     </ul>
+
+                    <div class="project-gallery">
+                        <div class="gallery-header">📸 Project Showcase</div>
+                        <div class="gallery-grid">
+                            <div class="gallery-item">
+                                <img src="./assets/see-glasses-images/1743892739130.jpeg" alt="SEE Smart Glasses Hardware" />
+                                <div class="gallery-item-caption">Smart Glasses Sketch</div>
+                            </div>
+                            <div class="gallery-item">
+                                <img src="./assets/see-glasses-images/1743892748206.jpeg" alt="SEE Smart Glasses Hardware" />
+                                <div class="gallery-item-caption">Smart Glasses Hardware</div>
+                            </div>
+                            <div class="gallery-item">
+                                <img src="./assets/see-glasses-images/1743892754673.jpeg" alt="Mobile Companion App Interface" />
+                                <div class="gallery-item-caption">Mobile Companion App</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="project-links">
                         <a href="https://github.com/Saoudyahya/FLASK-image-guidance-generator-yolo-VisionEncoderDecoderModel" class="project-link">
                             <i class="fab fa-github"></i>
@@ -1043,7 +1589,7 @@
                     </div>
                 </div>
 
-                <div class="devops-card project-card" style="--index: 4">
+                <div class="devops-card project-card" style="--index: 5">
                     <div class="project-header">
                         <i class="fas fa-robot project-icon"></i>
                         <div>
@@ -1078,7 +1624,7 @@
                     </div>
                 </div>
 
-                <div class="devops-card project-card" style="--index: 5">
+                <div class="devops-card project-card" style="--index: 6">
                     <div class="project-header">
                         <i class="fas fa-chart-line project-icon"></i>
                         <div>
@@ -1122,73 +1668,6 @@
         </div>
     </section>
 
-    <section id="pipeline">
-        <div class="container">
-            <div class="pipeline-container">
-                <h2 class="pipeline-title">DevOps Pipeline Architecture</h2>
-                
-                <div class="pipeline" id="devops-pipeline">
-                    <div class="pipeline-step active" data-step="0">
-                        <i class="fab fa-git-alt"></i>
-                        <h4>Source</h4>
-                        <p>Git Repository</p>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step" data-step="1">
-                        <i class="fas fa-hammer"></i>
-                        <h4>Build</h4>
-                        <p>Compile & Test</p>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step" data-step="2">
-                        <i class="fab fa-docker"></i>
-                        <h4>Package</h4>
-                        <p>Container Image</p>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step" data-step="3">
-                        <i class="fas fa-shield-alt"></i>
-                        <h4>Scan</h4>
-                        <p>Security Check</p>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step" data-step="4">
-                        <i class="fas fa-dharmachakra"></i>
-                        <h4>Deploy</h4>
-                        <p>Kubernetes</p>
-                    </div>
-                    <div class="pipeline-arrow">→</div>
-                    <div class="pipeline-step" data-step="5">
-                        <i class="fas fa-chart-line"></i>
-                        <h4>Monitor</h4>
-                        <p>Observability</p>
-                    </div>
-                </div>
-                
-                <div class="cert-grid">
-                    <div class="cert-card">
-                        <i class="fas fa-dharmachakra"></i>
-                        <h4>KCNA Certified</h4>
-                        <p>Kubernetes and Cloud Native Associate</p>
-                        <small>Cloud Native Computing Foundation</small>
-                    </div>
-                    <div class="cert-card">
-                        <i class="fab fa-linux"></i>
-                        <h4>LFS250 Certified</h4>
-                        <p>Kubernetes and Cloud Native Essentials</p>
-                        <small>The Linux Foundation</small>
-                    </div>
-                    <div class="cert-card">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h4>Master's in AI</h4>
-                        <p>Artificial Intelligence (In Progress)</p>
-                        <small>Faculté des Sciences Semlalia, Marrakech</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section id="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
@@ -1200,15 +1679,20 @@
                     <p>saoudyahya123@gmail.com</p>
                 </div>
                 <div class="devops-card contact-card">
-                    <i class="fab fa-linkedin"></i>
-                    <h4>LinkedIn</h4>
-                    <p>yahya-saoud</p>
+                    <a href="https://www.linkedin.com/in/yahya-saoud-206781264/">
+                        <i class="fab fa-linkedin"></i>
+                        <h4>LinkedIn</h4>
+                        <p>yahya-saoud</p>
+                    </a>
                 </div>
                 <div class="devops-card contact-card">
-                    <i class="fab fa-github"></i>
-                    <h4>GitHub</h4>
-                    <p>Saoudyahya</p>
+                    <a href="https://github.com/Saoudyahya">
+                        <i class="fab fa-github"></i>
+                        <h4>GitHub</h4>
+                        <p>Saoudyahya</p>
+                    </a>
                 </div>
+                
                 <div class="devops-card contact-card">
                     <i class="fas fa-map-marker-alt"></i>
                     <h4>Location</h4>
@@ -1229,16 +1713,6 @@
     </section>
 
     <script>
-        // Pipeline animation
-        const pipelineSteps = document.querySelectorAll('.pipeline-step');
-        let currentStep = 0;
-
-        function animatePipeline() {
-            pipelineSteps.forEach(step => step.classList.remove('active'));
-            pipelineSteps[currentStep].classList.add('active');
-            currentStep = (currentStep + 1) % pipelineSteps.length;
-        }
-
         // Navigation
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1275,9 +1749,6 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Start pipeline animation
-            setInterval(animatePipeline, 3000);
-            
             // Observe cards for animations
             document.querySelectorAll('.devops-card, .tech-item, .cert-card').forEach(card => {
                 observer.observe(card);
