@@ -38,7 +38,7 @@
             overflow-x: hidden;
         }
 
-        /* Enhanced animated background */
+        /* Enhanced animated background with performance optimizations */
         .bg-container {
             position: fixed;
             top: 0;
@@ -47,6 +47,7 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
+            will-change: transform;
         }
 
         .bg-grid {
@@ -61,6 +62,27 @@
                 linear-gradient(90deg, rgba(54, 108, 229, 0.1) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: gridMove 20s linear infinite;
+            will-change: transform;
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .bg-grid,
+            .particle,
+            .shape,
+            .typewriter-command,
+            .terminal-output,
+            .terminal-data,
+            .typing-cursor {
+                animation: none !important;
+            }
+            
+            .devops-card,
+            .tech-item,
+            .cert-card {
+                transform: none !important;
+                transition: none !important;
+            }
         }
 
         @keyframes gridMove {
@@ -68,13 +90,14 @@
             100% { transform: translate(50px, 50px); }
         }
 
-        /* Floating particles */
+        /* Floating particles with performance optimization */
         .particle {
             position: absolute;
             background: var(--accent-blue);
             border-radius: 50%;
             opacity: 0.1;
             animation: float linear infinite;
+            will-change: transform;
         }
 
         .particle:nth-child(2) { background: var(--docker-blue); }
@@ -161,7 +184,7 @@
             }
         }
 
-        /* Navigation */
+        /* Navigation with scroll progress indicator */
         nav {
             position: fixed;
             top: 0;
@@ -171,6 +194,16 @@
             border-bottom: 1px solid var(--border-color);
             padding: 1rem 0;
             z-index: 1000;
+        }
+
+        .scroll-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--docker-blue), var(--k8s-blue), var(--success-green));
+            transition: width 0.3s ease;
+            z-index: 1001;
         }
 
         .nav-container {
@@ -187,6 +220,11 @@
             font-size: 1.2rem;
             font-weight: 600;
             color: var(--docker-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         nav ul {
@@ -202,11 +240,28 @@
             border-radius: 6px;
             transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
 
         nav a:hover, nav a.active {
             color: var(--text-primary);
             background: var(--hover-bg);
+        }
+
+        nav a.active::after {
+            width: 60%;
         }
 
         /* Container */
@@ -224,20 +279,15 @@
             padding: 2rem 0;
         }
 
-        /* DevOps Card Component */
+        /* Enhanced DevOps Cards with better interactions */
         .devops-card {
             background: var(--secondary-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-        }
-
-        .devops-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            will-change: transform;
         }
 
         .devops-card::before {
@@ -248,13 +298,32 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, var(--docker-blue), var(--k8s-blue), var(--success-green));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
         }
 
-        /* Hero Section */
+        .devops-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .devops-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(54, 108, 229, 0.2);
+        }
+
+        .devops-card:focus-within {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        /* Enhanced Hero Section with better CTAs */
         .hero {
             text-align: center;
             padding: 6rem 2rem 4rem;
             margin-top: 4rem;
+            position: relative;
         }
 
         .hero-title {
@@ -264,12 +333,32 @@
             background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 5px rgba(54, 108, 229, 0.3)); }
+            100% { filter: drop-shadow(0 0 15px rgba(54, 108, 229, 0.5)); }
         }
 
         .hero-subtitle {
             font-size: 1.4rem;
             color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .elevator-pitch {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            font-weight: 500;
             margin-bottom: 2rem;
+            padding: 1rem 2rem;
+            background: rgba(54, 108, 229, 0.1);
+            border-radius: 30px;
+            border: 1px solid rgba(54, 108, 229, 0.2);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hero-description {
@@ -279,6 +368,51 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--docker-blue), var(--k8s-blue));
+            color: white;
+            box-shadow: 0 4px 15px rgba(54, 108, 229, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(54, 108, 229, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-blue);
+            color: white;
+            transform: translateY(-2px);
         }
 
         .terminal-line {
@@ -615,16 +749,70 @@
             border-color: var(--warning-orange) !important;
         }
 
-        /* Projects Section */
-        .project-grid {
-            display: grid;
-            gap: 3rem;
-            margin: 3rem 0;
-        }
-
+        /* Enhanced Projects with better readability */
         .project-card {
             padding: 2.5rem;
             position: relative;
+            background: var(--secondary-bg);
+        }
+
+        .project-summary {
+            background: var(--tertiary-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .project-summary h5 {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-summary p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--tertiary-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .project-header {
@@ -1036,6 +1224,7 @@
     </div>
 
     <nav>
+        <div class="scroll-progress" id="scroll-progress"></div>
         <div class="nav-container">
             <div class="logo">saoud@devops:~$</div>
             <ul>
@@ -1053,11 +1242,17 @@
             <div class="hero">
                 <h1 class="hero-title">SAOUD YAHYA</h1>
                 <p class="hero-subtitle">MLOps & DevOps Engineer • Cloud Architect • AI Research</p>
+                
+                <div class="elevator-pitch">
+                    Transforming AI breakthroughs into production-ready solutions through scalable cloud infrastructure
+                </div>
+                
                 <p class="hero-description">
                     Specializing in bridging the gap between cutting-edge AI research and production-ready systems. 
                     Building scalable, intelligent infrastructures with cloud-native technologies and enterprise-grade microservices architectures.
                 </p>
                 
+       
                 <div class="achievement-banner">
                     🏆 Water4Future Hackathon Winner - 1st place among 20+ teams (UNESCO & Cadi Ayyad University)
                 </div>
@@ -1077,7 +1272,17 @@
                 <div class="terminal-line terminal-data" style="margin-top: 0.5rem;">
                     <span style="color: var(--text-secondary);">saoud-yahya&nbsp;&nbsp;&nbsp;1/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running&nbsp;&nbsp;&nbsp;KCNA,LFS250</span>
                 </div>
-
+         <div class="cta-buttons">
+                    <a href="#projects" class="btn-primary">
+                        <i class="fas fa-code"></i>
+                        View My Work
+                    </a>
+                    <a href="./assets/Saoud_yahya_Resume.pdf" class="btn-secondary">
+                        <i class="fas fa-download"></i>
+                        Download Resume
+                    </a>
+                </div>
+                
                 <div class="tech-grid">
                     <div class="tech-item docker">
                         <i class="fab fa-docker"></i>
@@ -1304,11 +1509,37 @@
                             <small style="color: var(--text-muted);">May 2025 - Aug 2025</small>
                         </div>
                     </div>
+                    
+                    <div class="project-summary">
+                        <h5>🎯 Project Impact</h5>
+                        <p>Built a resilient, scalable microservices ecosystem that revolutionizes e-commerce performance with enterprise-grade reliability.</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">Microservices</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">70%</div>
+                            <div class="stat-label">API Reduction</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">&lt;200ms</div>
+                            <div class="stat-label">Response Time</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99.9%</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                    </div>
+                    
                     <p class="project-description">
-                        NexusCommerce isn't just another e-commerce platform—it's a resilient, scalable ecosystem where microservices dance in perfect harmony to deliver exceptional shopping experiences. Born from the vision of making online retail more responsive, reliable, and revolutionary, our architecture stands as a testament to modern software engineering principles.
+                        A modern e-commerce platform where microservices work in harmony to deliver exceptional shopping experiences. Features event-driven architecture, service mesh, and comprehensive observability.
                     </p>
+                    
                     <div class="achievement-banner" style="margin: 1.5rem 0; background: linear-gradient(135deg, var(--success-green), var(--docker-blue));">
-                        🚀 Key Achievements: 70% API reduction • Sub-200ms response times • Zero-downtime deployments
+                        🚀 Key Achievements: Zero-downtime deployments • Enterprise-grade scalability • Production-ready
                     </div>
                     <div class="project-tech">
                         <div class="skill-tags">
@@ -1713,57 +1944,66 @@
     </section>
 
     <script>
-        // Navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                const navHeight = document.querySelector('nav').offsetHeight;
-                const targetPosition = targetSection.offsetTop - navHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-                
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-
-        // Initialize
+        // Enhanced Navigation with scroll progress
         document.addEventListener('DOMContentLoaded', function() {
-            // Observe cards for animations
-            document.querySelectorAll('.devops-card, .tech-item, .cert-card').forEach(card => {
-                observer.observe(card);
+            const scrollProgress = document.getElementById('scroll-progress');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            
+            // Scroll progress indicator
+            function updateScrollProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                scrollProgress.style.width = scrollPercent + '%';
+            }
+            
+            // Enhanced smooth scrolling
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const targetPosition = targetSection.offsetTop - navHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active state
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
             });
             
-            // Update active nav based on scroll
-            window.addEventListener('scroll', () => {
-                const sections = document.querySelectorAll('section');
-                const navLinks = document.querySelectorAll('.nav-link');
-                
+            // Enhanced scroll event listener
+            let ticking = false;
+            function handleScroll() {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        updateScrollProgress();
+                        updateActiveNavLink();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+            
+            // Update active navigation link based on scroll position
+            function updateActiveNavLink() {
                 let currentSection = '';
+                const scrollPos = window.scrollY + 150;
+                
                 sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
+                    const sectionTop = section.offsetTop;
                     const sectionHeight = section.clientHeight;
-                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
                         currentSection = section.getAttribute('id');
                     }
                 });
@@ -1774,7 +2014,76 @@
                         link.classList.add('active');
                     }
                 });
+            }
+            
+            // Optimized scroll listener
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        // Trigger any additional animations
+                        if (entry.target.classList.contains('stats-grid')) {
+                            animateCounters(entry.target);
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animations
+            document.querySelectorAll('.devops-card, .tech-item, .cert-card, .timeline-item, .stats-grid').forEach(card => {
+                observer.observe(card);
             });
+            
+            // Counter animation for stats
+            function animateCounters(container) {
+                const counters = container.querySelectorAll('.stat-number');
+                counters.forEach(counter => {
+                    const target = counter.textContent.replace(/[^\d]/g, '');
+                    if (target) {
+                        let count = 0;
+                        const increment = target / 50;
+                        const timer = setInterval(() => {
+                            count += increment;
+                            if (count >= target) {
+                                counter.textContent = counter.textContent.replace(/\d+/, target);
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = counter.textContent.replace(/\d+/, Math.floor(count));
+                            }
+                        }, 20);
+                    }
+                });
+            }
+            
+            // Enhanced CTA buttons
+            document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+            
+            // Performance optimization: reduce motion for users who prefer it
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.documentElement.style.setProperty('scroll-behavior', 'auto');
+            }
+            
+            // Initialize
+            updateScrollProgress();
+            updateActiveNavLink();
         });
     </script>
 </body>
