@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saoud Yahya - DevOps & MLOps Engineer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --tertiary-bg: #21262d;
+            --accent-blue: #0366d6;
+            --docker-blue: #2496ed;
+            --k8s-blue: #326ce5;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --border-color: #30363d;
+            --hover-bg: rgba(54, 108, 229, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Subtle animated background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(rgba(54, 108, 229, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(54, 108, 229, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--docker-blue);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-primary);
+            background: var(--hover-bg);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        /* DevOps Card Component */
+        .devops-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .devops-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .devops-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--docker-blue), var(--k8s-blue), var(--success-green));
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            margin-top: 4rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terminal-line {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem 1.5rem;
+            margin: 1rem auto;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .prompt {
+            color: var(--success-green);
+        }
+
+        .command {
+            color: var(--docker-blue);
+        }
+
+        .typing-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Tech Stack Grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .tech-item {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tech-item:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+        }
+
+        .tech-item i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-item.docker i { color: var(--docker-blue); }
+        .tech-item.kubernetes i { color: var(--k8s-blue); }
+        .tech-item.aws i { color: var(--warning-orange); }
+        .tech-item.git i { color: var(--danger-red); }
+        .tech-item.jenkins i { color: #d33833; }
+        .tech-item.terraform i { color: #623ce4; }
+
+        .tech-item h4 {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Skills Section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--docker-blue), var(--k8s-blue));
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .skill-category {
+            padding: 2rem;
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .skill-header i {
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+        }
+
+        .skill-header h3 {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-tag {
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+            background: var(--hover-bg);
+        }
+
+        /* Projects Section */
+        .project-grid {
+            display: grid;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .project-card {
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-icon {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-top: 0.5rem;
+            min-width: 60px;
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .project-tech {
+            margin-bottom: 2rem;
+        }
+
+        .project-features {
+            list-style: none;
+        }
+
+        .project-features li {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .project-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--success-green);
+            font-weight: bold;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--tertiary-bg);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .project-link:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+            background: var(--hover-bg);
+        }
+
+        /* Achievement Banner */
+        .achievement-banner {
+            background: linear-gradient(135deg, var(--success-green), var(--k8s-blue));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Pipeline Section */
+        .pipeline-container {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .pipeline-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .pipeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .pipeline-step {
+            background: var(--tertiary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            min-width: 140px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pipeline-step.active {
+            border-color: var(--success-green);
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .pipeline-step i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .pipeline-step.active i {
+            color: var(--success-green);
+        }
+
+        .pipeline-step h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .pipeline-step p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .pipeline-arrow {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Certifications */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .cert-card {
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover {
+            border-color: var(--k8s-blue);
+            transform: translateY(-5px);
+        }
+
+        .cert-card i {
+            font-size: 2.5rem;
+            color: var(--k8s-blue);
+            margin-bottom: 1rem;
+        }
+
+        .cert-card h4 {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-card p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-card small {
+            color: var(--text-muted);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-card {
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-card i {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h4 {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+        }
+
+        .cta-section {
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .cta-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-quote {
+            color: var(--text-muted);
+            font-style: italic;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            .pipeline { flex-direction: column; }
+            .pipeline-arrow { transform: rotate(90deg); }
+            nav ul { flex-wrap: wrap; gap: 1rem; }
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .project-header { flex-direction: column; text-align: center; }
+            .project-icon { margin-top: 0; }
+            .project-links { justify-content: center; }
+        }
+
+        /* Loading animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Pod-like smooth transitions */
+        .devops-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .devops-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(54, 108, 229, 0.2);
+        }
+
+        .project-card {
+            animation: podInit 0.6s ease-out forwards;
+            animation-delay: calc(var(--index) * 0.1s);
+        }
+
+        @keyframes podInit {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(-15deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">saoud@devops:~$</div>
+            <ul>
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#pipeline" class="nav-link">Pipeline</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="container">
+            <div class="hero">
+                <h1 class="hero-title">SAOUD YAHYA</h1>
+                <p class="hero-subtitle">MLOps & DevOps Engineer • Cloud Architect • AI Research</p>
+                <p class="hero-description">
+                    Specializing in bridging the gap between cutting-edge AI research and production-ready systems. 
+                    Building scalable, intelligent infrastructures with cloud-native technologies and enterprise-grade microservices architectures.
+                </p>
+                
+                <div class="achievement-banner">
+                    🏆 Water4Future Hackathon Winner - 1st place among 20+ teams (UNESCO & Cadi Ayyad University)
+                </div>
+                
+                <div class="terminal-line">
+                    <span class="prompt">saoud@cloud:</span>
+                    <span class="command">kubectl get engineer --selector=expertise=mlops,devops</span>
+                    <span class="typing-cursor">|</span>
+                </div>
+                
+                <div class="terminal-line" style="margin-top: 0.5rem;">
+                    <span style="color: var(--success-green);">NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READY&nbsp;&nbsp;&nbsp;STATUS&nbsp;&nbsp;&nbsp;&nbsp;CERTIFICATIONS</span>
+                </div>
+                
+                <div class="terminal-line" style="margin-top: 0.5rem;">
+                    <span style="color: var(--text-secondary);">saoud-yahya&nbsp;&nbsp;&nbsp;1/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running&nbsp;&nbsp;&nbsp;KCNA,LFS250</span>
+                </div>
+
+                <div class="tech-grid">
+                    <div class="tech-item docker">
+                        <i class="fab fa-docker"></i>
+                        <h4>Docker</h4>
+                        <p>Containerization</p>
+                    </div>
+                    <div class="tech-item kubernetes">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Kubernetes</h4>
+                        <p>Orchestration</p>
+                    </div>
+                    <div class="tech-item aws">
+                        <i class="fab fa-aws"></i>
+                        <h4>AWS</h4>
+                        <p>Cloud Platform</p>
+                    </div>
+                    <div class="tech-item terraform">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>Terraform</h4>
+                        <p>Infrastructure as Code</p>
+                    </div>
+                    <div class="tech-item jenkins">
+                        <i class="fas fa-cogs"></i>
+                        <h4>ArgoCD</h4>
+                        <p>GitOps</p>
+                    </div>
+                    <div class="tech-item git">
+                        <i class="fas fa-brain"></i>
+                        <h4>MLOps</h4>
+                        <p>ML Production</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Stack</h2>
+            
+            <div class="skills-container">
+                <div class="devops-card skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-server"></i>
+                        <h3>Infrastructure & DevOps</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">AWS EKS</span>
+                        <span class="skill-tag">Terraform</span>
+                        <span class="skill-tag">ArgoCD</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">Helm</span>
+                        <span class="skill-tag">Kustomize</span>
+                        <span class="skill-tag">Prometheus</span>
+                        <span class="skill-tag">Grafana</span>
+                        <span class="skill-tag">ELK Stack</span>
+                    </div>
+                </div>
+                
+                <div class="devops-card skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI/ML & MLOps</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">MLOps</span>
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">Computer Vision</span>
+                        <span class="skill-tag">NLP</span>
+                        <span class="skill-tag">YOLOv9</span>
+                        <span class="skill-tag">Transformers</span>
+                        <span class="skill-tag">Agentic RAG</span>
+                        <span class="skill-tag">Model Deployment</span>
+                    </div>
+                </div>
+                
+                <div class="devops-card skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Development & Architecture</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">Go</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Next.js</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">Microservices</span>
+                        <span class="skill-tag">Apache Kafka</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+                
+                <div class="devops-card skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Security & Quality</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">DevSecOps</span>
+                        <span class="skill-tag">SonarQube</span>
+                        <span class="skill-tag">Trivy</span>
+                        <span class="skill-tag">OWASP</span>
+                        <span class="skill-tag">Container Security</span>
+                        <span class="skill-tag">Vulnerability Scanning</span>
+                        <span class="skill-tag">GitOps Security</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            
+            <div class="project-grid">
+                <div class="devops-card project-card" style="--index: 0">
+                    <div class="project-header">
+                        <i class="fas fa-shopping-cart project-icon"></i>
+                        <div>
+                            <h3 class="project-title">NexusCommerce Platform</h3>
+                            <p class="project-subtitle">Complete Cloud-Native E-Commerce Ecosystem</p>
+                            <small style="color: var(--text-muted);">May 2025 - Aug 2025</small>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        NexusCommerce isn't just another e-commerce platform—it's a resilient, scalable ecosystem where microservices dance in perfect harmony to deliver exceptional shopping experiences. Born from the vision of making online retail more responsive, reliable, and revolutionary, our architecture stands as a testament to modern software engineering principles.
+                    </p>
+                    <div class="achievement-banner" style="margin: 1.5rem 0; background: linear-gradient(135deg, var(--success-green), var(--docker-blue));">
+                        🚀 Key Achievements: 70% API reduction • Sub-200ms response times • Zero-downtime deployments
+                    </div>
+                    <div class="project-tech">
+                        <div class="skill-tags">
+                            <span class="skill-tag">Java 17</span>
+                            <span class="skill-tag">Spring Boot 3.x</span>
+                            <span class="skill-tag">Go</span>
+                            <span class="skill-tag">Apache Kafka</span>
+                            <span class="skill-tag">Next.js 15</span>
+                            <span class="skill-tag">React 18</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">AWS EKS</span>
+                            <span class="skill-tag">Terraform</span>
+                            <span class="skill-tag">ArgoCD</span>
+                            <span class="skill-tag">Helm</span>
+                            <span class="skill-tag">Istio</span>
+                            <span class="skill-tag">Redis</span>
+                        </div>
+                    </div>
+                    <ul class="project-features">
+                        <li>Built 8 microservices using Java Spring Boot and Go, deployed on AWS EKS</li>
+                        <li>Complete GitOps automation with ArgoCD for zero-downtime deployments</li>
+                        <li>Event-driven architecture with service mesh (Istio) and async Kafka communication</li>
+                        <li>Seamless kind-to-EKS production migration with one-command deployment</li>
+                        <li>Comprehensive observability: Prometheus, Grafana, ELK Stack</li>
+                        <li>Multi-environment CI/CD with customer frontend (Next.js) and admin dashboard</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://app.eraser.io/workspace/el7sNnsJe96fEgJclztv?origin=share" class="project-link">
+                            <i class="fas fa-diagram-project"></i>
+                            App Architecture
+                        </a>
+                        <a href="https://app.eraser.io/workspace/g1l4mIvbfEltNHNNYP0G?origin=share" class="project-link">
+                            <i class="fas fa-dharmachakra"></i>
+                            K8s Infrastructure
+                        </a>
+                        <a href="https://app.eraser.io/workspace/xb6q22SZFLAD0ftPeuNO?origin=share" class="project-link">
+                            <i class="fas fa-code-branch"></i>
+                            GitOps Pipeline
+                        </a>
+                        <a href="https://app.eraser.io/workspace/W0KDmrzgWrCJ2C659BIG?origin=share" class="project-link">
+                            <i class="fab fa-aws"></i>
+                            AWS Integration
+                        </a>
+                    </div>
+                </div>
+
+                <div class="devops-card project-card" style="--index: 1">
+                    <div class="project-header">
+                        <i class="fas fa-dna project-icon"></i>
+                        <div>
+                            <h3 class="project-title">Bio Data Extraction - Animal NER</h3>
+                            <p class="project-subtitle">Self-Supervised Named Entity Recognition System</p>
+                            <small style="color: var(--text-muted);">June 2025</small>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Developed an innovative Named Entity Recognition (NER) system for extracting animal entities from scientific PDF documents using self-supervised learning techniques. This project addresses the critical challenge of traditional NER systems that require massive manually annotated datasets, which typically cost $50,000-$100,000 per domain and take 6-12 months for expert annotation.
+                    </p>
+                    <div class="achievement-banner" style="margin: 1.5rem 0; background: linear-gradient(135deg, var(--k8s-blue), var(--warning-orange));">
+                        💡 Innovation: Eliminated $50K-$100K annotation costs • Superior BERT baseline performance
+                    </div>
+                    <div class="project-tech">
+                        <div class="skill-tags">
+                            <span class="skill-tag">Deep Learning</span>
+                            <span class="skill-tag">NLP</span>
+                            <span class="skill-tag">Self-Supervised Learning</span>
+                            <span class="skill-tag">Contrastive Learning</span>
+                            <span class="skill-tag">PDF Processing</span>
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Neural Networks</span>
+                        </div>
+                    </div>
+                    <ul class="project-features">
+                        <li>Self-Supervised Entity Relationship Learning eliminating expensive manual annotation</li>
+                        <li>Ultra-Strict Filtering mechanisms ensuring high-quality entity extraction</li>
+                        <li>Contrastive Learning methods improving recognition accuracy and relationships</li>
+                        <li>Cost-effective alternative to domain-specific datasets with cross-discipline generalization</li>
+                        <li>Scalable solution for biodiversity research and scientific literature analysis</li>
+                        <li>Overcame traditional NER limitations and computational expense of standard transformers</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/Saoudyahya/BioDataExtract" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Research Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="devops-card project-card" style="--index: 2">
+                    <div class="project-header">
+                        <i class="fas fa-brain project-icon"></i>
+                        <div>
+                            <h3 class="project-title">Scaling Laws & Mechanistic Interpretability</h3>
+                            <p class="project-subtitle">Transformer Architecture Research</p>
+                            <small style="color: var(--text-muted);">May 2025 - Jun 2025</small>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Conducted comprehensive research investigating scaling behaviors of standard Transformers vs Switch Transformers, examining how model parameters affect performance and internal representations. This work addresses fundamental questions about optimal model design in large-scale neural networks.
+                    </p>
+                    <div class="achievement-banner" style="margin: 1.5rem 0; background: linear-gradient(135deg, var(--danger-red), var(--k8s-blue));">
+                        🔬 Research Impact: Switch-Large 120.91 PPL • Enhanced SAE interpretability • Open-source framework
+                    </div>
+                    <div class="project-tech">
+                        <div class="skill-tags">
+                            <span class="skill-tag">Transformer Architecture</span>
+                            <span class="skill-tag">Scaling Laws</span>
+                            <span class="skill-tag">Sparse Activation</span>
+                            <span class="skill-tag">Switch Transformers</span>
+                            <span class="skill-tag">Mechanistic Interpretability</span>
+                            <span class="skill-tag">Sparse Autoencoders</span>
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">Research</span>
+                        </div>
+                    </div>
+                    <ul class="project-features">
+                        <li>Architecture-Dependent Scaling Discovery with opposite coefficients (-0.0381 vs +0.0173)</li>
+                        <li>Enhanced Mechanistic Interpretability Framework using SAE-enhanced superposition analysis</li>
+                        <li>Performance Optimization with Switch-Large achieving best performance (120.91 PPL)</li>
+                        <li>Analyzed 16 model configurations ranging from 13.1M to 597.3M parameters</li>
+                        <li>Developed superposition scoring methodology with consistent sparsity patterns</li>
+                        <li>Created practical guidelines for architecture selection in resource-constrained environments</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="#" class="project-link">
+                            <i class="fas fa-file-pdf"></i>
+                            Research Paper
+                        </a>
+                        <a href="#" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Open Source Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="devops-card project-card" style="--index: 3">
+                    <div class="project-header">
+                        <i class="fas fa-eye project-icon"></i>
+                        <div>
+                            <h3 class="project-title">SEE Smart Glasses</h3>
+                            <p class="project-subtitle">AI-Powered Accessibility Solution</p>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Intelligent accessibility solution combining computer vision and NLP to assist visually impaired users with real-time environmental awareness and voice interaction. Winner of accessibility innovation awards.
+                    </p>
+                    <div class="project-tech">
+                        <div class="skill-tags">
+                            <span class="skill-tag">YOLOv9</span>
+                            <span class="skill-tag">Computer Vision</span>
+                            <span class="skill-tag">NLP</span>
+                            <span class="skill-tag">React Native</span>
+                            <span class="skill-tag">FastAPI</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">ViT-GPT2</span>
+                            <span class="skill-tag">Whisper ASR</span>
+                        </div>
+                    </div>
+                    <ul class="project-features">
+                        <li>Real-time object detection and scene description using YOLOv9</li>
+                        <li>Voice interaction with AI-powered natural language processing</li>
+                        <li>Hardware-software integration with mobile companion app</li>
+                        <li>Containerized deployment for scalability and maintainability</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/Saoudyahya/FLASK-image-guidance-generator-yolo-VisionEncoderDecoderModel" class="project-link">
+                            <i class="fab fa-github"></i>
+                            View Project
+                        </a>
+                    </div>
+                </div>
+
+                <div class="devops-card project-card" style="--index: 4">
+                    <div class="project-header">
+                        <i class="fas fa-robot project-icon"></i>
+                        <div>
+                            <h3 class="project-title">Agentic RAG & LangGraph System</h3>
+                            <p class="project-subtitle">Advanced AI Content Generation</p>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Sophisticated LLM-based content generation system with retrieval-augmented generation capabilities using LangChain and multi-agent orchestration for intelligent decision-making.
+                    </p>
+                    <div class="project-tech">
+                        <div class="skill-tags">
+                            <span class="skill-tag">LangChain</span>
+                            <span class="skill-tag">Agentic RAG</span>
+                            <span class="skill-tag">LangGraph</span>
+                            <span class="skill-tag">Vector DB</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Docker</span>
+                        </div>
+                    </div>
+                    <ul class="project-features">
+                        <li>Multi-agent RAG systems with intelligent orchestration</li>
+                        <li>Real-time generation with vector database integration</li>
+                        <li>Horizontal scaling with containerized deployment</li>
+                        <li>Advanced prompt engineering and context management</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/Saoudyahya/Agentic-RAG-and-LangGraphe" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Explore Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="devops-card project-card" style="--index: 5">
+                    <div class="project-header">
+                        <i class="fas fa-chart-line project-icon"></i>
+                        <div>
+                            <h3 class="project-title">Enterprise Microservices Platform</h3>
+                            <p class="project-subtitle">Production-Ready Microservices Architecture</p>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Scalable microservices ecosystem built with Spring Boot, Spring Cloud, and Docker, featuring service discovery, distributed tracing, and comprehensive CI/CD pipelines.
+                    </p>
+                    <div class="project-tech">
+                        <div class="skill-tags">
+                            <span class="skill-tag">Spring Boot</span>
+                            <span class="skill-tag">Spring Cloud</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">RabbitMQ</span>
+                            <span class="skill-tag">Jenkins</span>
+                            <span class="skill-tag">Zipkin</span>
+                            <span class="skill-tag">Eureka</span>
+                        </div>
+                    </div>
+                    <ul class="project-features">
+                        <li>Microservices with service discovery and load balancing</li>
+                        <li>Asynchronous messaging with RabbitMQ integration</li>
+                        <li>Distributed tracing with Zipkin for monitoring</li>
+                        <li>End-to-end CI/CD pipelines with Jenkins automation</li>
+                        <li>Multi-database support (PostgreSQL & MongoDB)</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/Saoudyahya/apigateway-spring-boot" class="project-link">
+                            <i class="fab fa-github"></i>
+                            API Gateway
+                        </a>
+                        <a href="https://github.com/Saoudyahya/-Client-Reward-microservice-Backend" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Microservices
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pipeline">
+        <div class="container">
+            <div class="pipeline-container">
+                <h2 class="pipeline-title">DevOps Pipeline Architecture</h2>
+                
+                <div class="pipeline" id="devops-pipeline">
+                    <div class="pipeline-step active" data-step="0">
+                        <i class="fab fa-git-alt"></i>
+                        <h4>Source</h4>
+                        <p>Git Repository</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step" data-step="1">
+                        <i class="fas fa-hammer"></i>
+                        <h4>Build</h4>
+                        <p>Compile & Test</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step" data-step="2">
+                        <i class="fab fa-docker"></i>
+                        <h4>Package</h4>
+                        <p>Container Image</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step" data-step="3">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Scan</h4>
+                        <p>Security Check</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step" data-step="4">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>Deploy</h4>
+                        <p>Kubernetes</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step" data-step="5">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Monitor</h4>
+                        <p>Observability</p>
+                    </div>
+                </div>
+                
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <i class="fas fa-dharmachakra"></i>
+                        <h4>KCNA Certified</h4>
+                        <p>Kubernetes and Cloud Native Associate</p>
+                        <small>Cloud Native Computing Foundation</small>
+                    </div>
+                    <div class="cert-card">
+                        <i class="fab fa-linux"></i>
+                        <h4>LFS250 Certified</h4>
+                        <p>Kubernetes and Cloud Native Essentials</p>
+                        <small>The Linux Foundation</small>
+                    </div>
+                    <div class="cert-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Master's in AI</h4>
+                        <p>Artificial Intelligence (In Progress)</p>
+                        <small>Faculté des Sciences Semlalia, Marrakech</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            
+            <div class="contact-grid">
+                <div class="devops-card contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h4>Email</h4>
+                    <p>saoudyahya123@gmail.com</p>
+                </div>
+                <div class="devops-card contact-card">
+                    <i class="fab fa-linkedin"></i>
+                    <h4>LinkedIn</h4>
+                    <p>yahya-saoud</p>
+                </div>
+                <div class="devops-card contact-card">
+                    <i class="fab fa-github"></i>
+                    <h4>GitHub</h4>
+                    <p>Saoudyahya</p>
+                </div>
+                <div class="devops-card contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Location</h4>
+                    <p>Casablanca, Morocco</p>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h3 class="cta-title">Ready to Build Something Great?</h3>
+                <p class="cta-description">
+                    MLOps Excellence • Cloud-Native Solutions • AI Innovation • Enterprise Architecture
+                </p>
+                <p class="cta-quote">
+                    # "Bridging AI Research with Production Reality"
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Pipeline animation
+        const pipelineSteps = document.querySelectorAll('.pipeline-step');
+        let currentStep = 0;
+
+        function animatePipeline() {
+            pipelineSteps.forEach(step => step.classList.remove('active'));
+            pipelineSteps[currentStep].classList.add('active');
+            currentStep = (currentStep + 1) % pipelineSteps.length;
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                const navHeight = document.querySelector('nav').offsetHeight;
+                const targetPosition = targetSection.offsetTop - navHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start pipeline animation
+            setInterval(animatePipeline, 3000);
+            
+            // Observe cards for animations
+            document.querySelectorAll('.devops-card, .tech-item, .cert-card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Update active nav based on scroll
+            window.addEventListener('scroll', () => {
+                const sections = document.querySelectorAll('section');
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                let currentSection = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSection}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
