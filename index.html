@@ -1637,7 +1637,187 @@
                 margin-top: 0;
             }
         }
-        
+         .gallery-item.video-item {
+            position: relative;
+            background: var(--secondary-bg);
+        }
+
+        /* MAIN UPDATE: Bigger video dimensions */
+        .gallery-item video {
+            width: 100%;
+            height: 280px; /* Increased from 160px to 280px */
+            object-fit: cover;
+            display: block;
+            border-radius: 8px; /* Slightly larger border radius */
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item.video-item:hover video {
+            transform: scale(1.02);
+        }
+
+        /* Enhanced video overlay for bigger videos */
+        .video-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8); /* Slightly more opaque */
+            border-radius: 50%;
+            width: 80px; /* Increased from 60px */
+            height: 80px; /* Increased from 60px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px; /* Increased from 24px */
+            transition: all 0.3s ease;
+            pointer-events: none;
+            opacity: 0.9;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item.video-item:hover .video-overlay {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-item.video-item.playing .video-overlay {
+            opacity: 0;
+        }
+
+        /* Enhanced video controls styling */
+        .gallery-item video::-webkit-media-controls {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover video::-webkit-media-controls {
+            opacity: 1;
+        }
+
+        /* For standalone video items (not in grid) */
+        .video-showcase {
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-showcase video {
+            width: 100%;
+            height: 400px; /* Even bigger for standalone videos */
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Enhanced gallery grid for better video display */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Increased from 220px */
+            gap: 2rem; /* Increased gap */
+        }
+
+        /* Responsive video adjustments - UPDATED */
+        @media (max-width: 1024px) {
+            .gallery-item video {
+                height: 240px; /* Reduced slightly for tablets */
+            }
+            
+            .video-showcase video {
+                height: 350px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-item video {
+                height: 200px; /* Still bigger than original 140px */
+            }
+            
+            .video-showcase video {
+                height: 280px;
+            }
+            
+            .video-overlay {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-item video {
+                height: 180px; /* Still bigger than original 120px */
+            }
+            
+            .video-showcase video {
+                height: 220px;
+            }
+            
+            .video-overlay {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+        }
+
+        /* Optional: Enhanced gallery header for video sections */
+        .video-gallery-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Enhanced project gallery container */
+        .project-gallery {
+            margin: 2.5rem 0;
+            background: var(--tertiary-bg);
+            border-radius: 12px;
+            padding: 2.5rem; /* Increased padding */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Optional: Make videos full-width in their container */
+        .full-width-video {
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .full-width-video video {
+            width: 100%;
+            height: 450px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .full-width-video video {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .full-width-video video {
+                height: 220px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2117,12 +2297,22 @@
                         <li>Real-time monitoring and metrics collection using Prometheus and Grafana</li>
                         <li>Scalable ML workflows with automatic resource management and fault tolerance</li>
                     </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/Saoudyahya/Kubernetes-Based-Machine-Learning-Project" class="project-link">
-                            <i class="fab fa-github"></i>
-                            View Project
-                        </a>
-                    </div>
+
+                        <div class="full-width-video">
+                    <video 
+                        preload="metadata" 
+                        poster="./assets/CV/drone-demo-thumbnail.jpg"
+                        controls
+                        muted
+                        loop 
+                        autoplay
+                    >
+                        <source src="./assets/video/k8s-project - Made with Clipchamp.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+
                 </div>
 
                 <div class="devops-card project-card" style="--index: 2">
@@ -2378,6 +2568,19 @@
                     </ul>
 
 
+                                  <div class="full-width-video">
+                    <video 
+                        preload="metadata" 
+                        poster="./assets/CV/drone-demo-thumbnail.jpg"
+                        controls
+                        muted 
+                        loop 
+                        autoplay
+                    >
+                        <source src="./assets/video/depth_comparison_optimized.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
                             <div class="project-gallery">
                         <div class="gallery-header">📸 Project Showcase</div>
                         <div class="gallery-grid">
@@ -2698,6 +2901,93 @@
             updateScrollProgress();
             updateActiveNavLink();
         });
+    function toggleVideo(video) {
+    const videoItem = video.closest('.video-item');
+    const overlay = videoItem.querySelector('.video-overlay');
+    const playIcon = overlay.querySelector('i');
+    
+    if (video.paused) {
+        video.play();
+        videoItem.classList.add('playing');
+        playIcon.className = 'fas fa-pause';
+    } else {
+        video.pause();
+        videoItem.classList.remove('playing');
+        playIcon.className = 'fas fa-play';
+    }
+}
+
+// Video event listeners for better UX
+document.addEventListener('DOMContentLoaded', function() {
+    const videos = document.querySelectorAll('.gallery-item video');
+    
+    videos.forEach(video => {
+        const videoItem = video.closest('.video-item');
+        const overlay = videoItem.querySelector('.video-overlay');
+        const playIcon = overlay.querySelector('i');
+        
+        // Handle video end
+        video.addEventListener('ended', function() {
+            videoItem.classList.remove('playing');
+            playIcon.className = 'fas fa-play';
+        });
+        
+        // Handle video pause
+        video.addEventListener('pause', function() {
+            videoItem.classList.remove('playing');
+            playIcon.className = 'fas fa-play';
+        });
+        
+        // Handle video play
+        video.addEventListener('play', function() {
+            videoItem.classList.add('playing');
+            playIcon.className = 'fas fa-pause';
+        });
+        
+        // Handle video loading
+        video.addEventListener('loadstart', function() {
+            console.log('Video loading started:', video.src);
+        });
+        
+        // Handle video error
+        video.addEventListener('error', function() {
+            console.error('Video loading error:', video.error);
+            overlay.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        });
+    });
+    
+    // Pause all other videos when one starts playing
+    videos.forEach(video => {
+        video.addEventListener('play', function() {
+            videos.forEach(otherVideo => {
+                if (otherVideo !== video && !otherVideo.paused) {
+                    otherVideo.pause();
+                }
+            });
+        });
+    });
+});
+
+// Intersection Observer for lazy video loading
+if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const video = entry.target;
+                // Preload video metadata when it comes into view
+                if (video.preload === 'none') {
+                    video.preload = 'metadata';
+                }
+            }
+        });
+    }, {
+        rootMargin: '50px'
+    });
+    
+    document.querySelectorAll('.gallery-item video').forEach(video => {
+        videoObserver.observe(video);
+    });
+}
     </script>
 </body>
 </html>
