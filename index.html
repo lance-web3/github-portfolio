@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
+:root {
             --primary-bg: #0d1117;
             --secondary-bg: #161b22;
             --tertiary-bg: #21262d;
@@ -1019,6 +1019,16 @@
             margin-bottom: 1rem;
         }
 
+        /* Certification card image styling */
+        .cert-icon {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            border-radius: 8px;
+            object-fit: contain;
+            padding: 10px;
+        }
+
         .cert-card h4 {
             color: var(--text-primary);
             font-weight: 600;
@@ -1637,18 +1647,20 @@
                 margin-top: 0;
             }
         }
-         .gallery-item.video-item {
+
+        /* Video styling for gallery items */
+        .gallery-item.video-item {
             position: relative;
             background: var(--secondary-bg);
         }
 
-        /* MAIN UPDATE: Bigger video dimensions */
+        /* Enhanced video dimensions */
         .gallery-item video {
             width: 100%;
-            height: 280px; /* Increased from 160px to 280px */
+            height: 280px; /* Increased from 160px */
             object-fit: cover;
             display: block;
-            border-radius: 8px; /* Slightly larger border radius */
+            border-radius: 8px;
             transition: transform 0.3s ease;
         }
 
@@ -1662,7 +1674,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8); /* Slightly more opaque */
+            background: rgba(0, 0, 0, 0.8);
             border-radius: 50%;
             width: 80px; /* Increased from 60px */
             height: 80px; /* Increased from 60px */
@@ -1719,7 +1731,7 @@
             gap: 2rem; /* Increased gap */
         }
 
-        /* Responsive video adjustments - UPDATED */
+        /* Responsive video adjustments */
         @media (max-width: 1024px) {
             .gallery-item video {
                 height: 240px; /* Reduced slightly for tablets */
@@ -1769,19 +1781,6 @@
                 height: 60px;
                 font-size: 24px;
             }
-        }
-
-        /* Optional: Enhanced gallery header for video sections */
-        .video-gallery-header {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         /* Enhanced project gallery container */
@@ -1893,7 +1892,7 @@
                 </div>
                 
                 <div class="terminal-line terminal-data" style="margin-top: 0.5rem;">
-                    <span style="color: var(--text-secondary);">saoud-yahya&nbsp;&nbsp;&nbsp;1/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running&nbsp;&nbsp;&nbsp;KCNA,LFS250</span>
+                    <span style="color: var(--text-secondary);">saoud-yahya&nbsp;&nbsp;&nbsp;1/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running&nbsp;&nbsp;&nbsp;CKA,KCNA,LFS250</span>
                 </div>
          <div class="cta-buttons">
                     <a href="#projects" class="btn-primary">
@@ -1941,7 +1940,7 @@
 
           <div class="cert-grid">
                     <div class="cert-card">
-                        <i class="fas fa-dharmachakra"></i>
+                    <img src="./assets/certif/KCNA-Logo.png" alt="KCNA Certification" class="cert-icon">
                         <h4>KCNA Certified</h4>
                         <p>Kubernetes and Cloud Native Associate</p>
                         <small>Cloud Native Computing Foundation</small>
@@ -1952,7 +1951,7 @@
                         </div>
                     </div>
                     <div class="cert-card">
-                        <i class="fab fa-linux"></i>
+                 <img src="./assets/certif/LFS250-Course-Badge-1.avif" alt="LFS250  Certification" class="cert-icon">
                         <h4>LFS250 Certified</h4>
                         <p>Kubernetes and Cloud Native Essentials</p>
                         <small>The Linux Foundation</small>
@@ -1962,6 +1961,17 @@
                             </a>
                         </div>
                     </div>
+                      <div class="cert-card">
+                   <img src="./assets/certif/logo_cka_whitetext.png" alt="CKA Certification" class="cert-icon">
+                    <h4>CKA Certified</h4>
+                    <p>Certified Kubernetes Administrator</p>
+                    <small>Cloud Native Computing Foundation</small>
+                    <div style="margin-top: 1rem;">
+                        <a href="https://www.credly.com/badges/9e5cf66e-c2f0-48b3-a655-29b636eed2da" class="project-link" target="_blank" rel="noopener noreferrer">
+                            Verify Credential
+                        </a>
+                    </div>
+                </div>
                     <div class="cert-card">
                         <i class="fas fa-graduation-cap"></i>
                         <h4>Master's in AI</h4>
